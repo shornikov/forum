@@ -90,7 +90,7 @@
                     <xsl:value-of select="author"/>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 text">
                 <xsl:value-of select="text"/>
             </div>
         </div>

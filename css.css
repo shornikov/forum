@@ -9,3 +9,7 @@
     display: inline-block;
     font-size: .8rem;
 }
+.text{
+    white-space: pre;
+    white-space: pre-wrap;
+}
