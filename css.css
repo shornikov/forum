@@ -1,0 +1,11 @@
+.data {
+    margin-right: 2em;
+    display: inline-block;
+    font-size: .8em;
+}
+
+.author {
+    font-weight: bold;
+    display: inline-block;
+    font-size: .8rem;
+}
