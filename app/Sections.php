@@ -13,7 +13,7 @@ class Sections extends BasePage
 	{
 		global $pdo;
 
-		$query = "select * from hierarhy where linkName = :razdel order by id";
+		$query = "select * from sections where linkName = :razdel order by id";
 		$stmt = $pdo->prepare($query);
 		$stmt->bindParam(":razdel", $razdel);
 		$stmt->execute();
@@ -31,7 +31,8 @@ class Sections extends BasePage
 			$data['breadcrumb'][$key]['link'] = "/" . $level['linkName'];
 		}
 
-		$query = "select * from hierarhy where parentId = :parentId order by id";
+
+		$query = "select * from sections where parentId = :parentId order by id";
 		$stmt = $pdo->prepare($query);
 		$stmt->bindParam(":parentId", $data['id']);
 		$stmt->execute();
@@ -63,7 +64,7 @@ class Sections extends BasePage
 	function getTopics($id)
 	{
 		global $pdo;
-		$query = "select id,dateCreate,title,author from posts where parentId is null and hierarhyId=:id";
+		$query = "select id,dateCreate,title,author from posts where parentId is null and hierarhyId=:id order by dateCreate desc ";
 		$stmt = $pdo->prepare($query);
 		$stmt->bindParam(":id", $id);
 		$stmt->execute();

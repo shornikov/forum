@@ -3,7 +3,7 @@
         <html>
             <head>
                 <title>
-                    <xsl:value-of select="title"/>
+                    <xsl:value-of select="posts/node[1]/dateCreate"/>
                 </title>
                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
                       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -18,10 +18,7 @@
                         <ol class="breadcrumb">
                             <xsl:for-each select="breadcrumb/node">
                                 <li class="breadcrumb-item">
-                                    <a>
-                                        <xsl:attribute name="href">
-                                            <xsl:value-of select="link"/>
-                                        </xsl:attribute>
+                                    <a href="{link}">
                                         <xsl:value-of select="name"/>
                                     </a>
                                 </li>
@@ -30,36 +27,30 @@
                     </nav>
 
                     <h1>
-                        <xsl:value-of select="title"/>
+                        <xsl:value-of select="posts/node[1]/title"/>
                     </h1>
-                    <div class="col-12 alert alert-primary">
-                        <div class="col-12">
-                            <div class="data">
-                                <xsl:value-of select="dateCreate"/>
-                            </div>
-                            <div class="author">
-                                <xsl:value-of select="author"/>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <xsl:value-of select="text"/>
-                        </div>
+                    <!--                    <div class="col-12 alert alert-primary">-->
+                    <!--                        <div class="col-12">-->
+                    <!--                            <div class="data">-->
+                    <!--                                <xsl:value-of select="dateCreate"/>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="author">-->
+                    <!--                                <xsl:value-of select="author"/>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-12">-->
+                    <!--                            <xsl:value-of select="text"/>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <div class="posts">
+                        <xsl:apply-templates select="posts"/>
                     </div>
-
-                    <xsl:apply-templates select="topics"/>
-
                     <div class="col-12 jumbotron mt-5 p-2 ">
                         <form action="/addpost" method="post">
-<!--                        Установка фокуса на форму приведет к отматыванию страницы вниз. Нафиг надо...-->
-                            <input type="hidden" name="razdel">
-                                <xsl:attribute name="value">
-                                    <xsl:value-of select="hierarhyId"/>
-                                </xsl:attribute>
+                            <!--                        Установка фокуса на форму приведет к отматыванию страницы вниз. Нафиг надо...-->
+                            <input type="hidden" name="razdel" value="{posts/node[1]/hierarhyId}">
                             </input>
-                            <input type="hidden" name="parentId">
-                                <xsl:attribute name="value">
-                                    <xsl:value-of select="id"/>
-                                </xsl:attribute>
+                            <input type="hidden" name="parentId" value="{posts/node[1]/id}">
                             </input>
                             <div class="form-group col-6">
                                 <label for="author">Author</label>
@@ -79,8 +70,20 @@
         </html>
     </xsl:template>
 
-<!--    todo возможно надо сделать внешний темплейт. Пока он сильно похож на темплейт из sections.xsl-->
-    <xsl:template match="topics/node">
+    <xsl:template match="posts/node">
+        <!--        используем css first-child всесто этого треша-->
+        <!--        <xsl:variable name="color">-->
+        <!--            <xsl:choose>-->
+        <!--                <xsl:when test="position()=1">-->
+        <!--                    <xsl:copy-of select="'primary'"/>-->
+        <!--                </xsl:when>-->
+        <!--                <xsl:otherwise>-->
+        <!--                    <xsl:copy-of select="'secondary'"/>-->
+        <!--                </xsl:otherwise>-->
+        <!--            </xsl:choose>-->
+        <!--        </xsl:variable>-->
+        <!--        <div class="col-12 alert alert-{$color}">-->
+
         <div class="col-12 alert alert-secondary">
             <div class="col-12">
                 <div class="data">

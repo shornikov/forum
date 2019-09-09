@@ -13,8 +13,8 @@ class Topic extends BasePage
 	function draw($topic)
 	{
 		global $pdo;
-		//стартовый пост
-		$query = "select * from posts where id = :topic and parentId is null";
+		//заправшиваем посты в топике. первый отбираем как главный
+		$query = "select id, text, title, dateCreate,author,hierarhyId from posts where id = :topic or parentId = :topic order by dateCreate";
 		$stmt = $pdo->prepare($query);
 		$stmt->bindParam(":topic", $topic);
 		$stmt->execute();
@@ -27,27 +27,17 @@ class Topic extends BasePage
 			$this->Error();
 			die();
 		}
+		$data = [];
+		$data['posts'] = $stmt->fetchAll();
 
-		$data = $stmt->fetch();
-		//print_r($data);
 
-		$levels = $this->breadcrumb($data['hierarhyId']);
+		$levels = $this->breadcrumb($data['posts'][0]['hierarhyId']);
 
 		foreach ($levels as $key => $level) {
 			$data['breadcrumb'][$key]['name'] = $level['name'];
 			$data['breadcrumb'][$key]['link'] = "/" . $level['linkName'];
 		}
 
-		//ответы
-		$query = "select text,author,dateCreate from posts where parentId = :topic order by dateCreate";
-		$stmt = $pdo->prepare($query);
-		$stmt->bindParam(":topic", $data['id']);
-		$stmt->execute();
-
-		if ($stmt->errorCode() != PDO::ERR_NONE) {
-			print_r($stmt->errorInfo());
-		}
-		$data['topics'] = $stmt->fetchAll();
 
 		//собираем xml
 		$xml_data = new array2xml('root');
@@ -58,7 +48,7 @@ class Topic extends BasePage
 		$xslt = new xsltProcessor();
 		$xsl = new DomDocument();
 
-		$xsl->load('topic.xsl');
+		$xsl->load('topics.xsl');
 		$xslt->importStyleSheet($xsl);
 		echo $xslt->transformToXML($xml_data);
 	}
@@ -69,7 +59,7 @@ class Topic extends BasePage
 	function addTopic()
 	{
 		global $pdo;
-		$query = "select * from hierarhy where linkName = :razdel order by id";
+		$query = "select * from sections where linkName = :razdel order by id";
 		$stmt = $pdo->prepare($query);
 		$stmt->bindParam(":razdel", $_POST['razdel']);
 		$stmt->execute();

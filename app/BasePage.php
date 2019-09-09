@@ -28,7 +28,7 @@ class BasePage
 		//todo быбрасывать средне-начальные при большом количестве элементов
 
 		global $pdo;
-		$query = "select * from hierarhy where id=:id";
+		$query = "select * from sections where id=:id";
 		$stmt = $pdo->prepare($query);
 		$stmt->bindParam(":id", $id);
 		$stmt->execute();
@@ -42,7 +42,7 @@ class BasePage
 		array_push($levels, $result);
 
 		while ($result['parentId'] != null) {
-			$query = "select * from hierarhy where id=:id";
+			$query = "select * from sections where id=:id";
 			$stmt = $pdo->prepare($query);
 			$stmt->bindParam(":id", $result['parentId']);
 			$stmt->execute();

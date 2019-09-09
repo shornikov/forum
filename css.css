@@ -10,6 +10,9 @@
     font-size: .8rem;
 }
 .text{
-    white-space: pre;
     white-space: pre-wrap;
+}
+
+.posts > .alert-secondary:first-child{
+    background-color: #b8daff;
 }

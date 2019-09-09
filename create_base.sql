@@ -19,21 +19,21 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `hierarhy`
+-- Структура таблицы `sections`
 --
 
-CREATE TABLE `hierarhy` (
+CREATE TABLE `sections` (
                             `id` int(8) NOT NULL,
                             `parentId` int(8) DEFAULT NULL,
                             `linkName` varchar(255) DEFAULT NULL,
                             `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=myISAM DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `hierarhy`
+-- Дамп данных таблицы `sections`
 --
 
-INSERT INTO `hierarhy` (`id`, `parentId`, `linkName`, `name`) VALUES
+INSERT INTO `sections` (`id`, `parentId`, `linkName`, `name`) VALUES
 (1, 5, 'razdel1', 'Раздел 1'),
 (2, 5, 'razdel2', 'раздел 2'),
 (3, 1, 'subrazdel1-1', 'Подраздел 1 Раздела 1'),
@@ -74,9 +74,9 @@ INSERT INTO `posts` (`id`, `parentId`, `dateCreate`, `hierarhyId`, `title`, `tex
 --
 
 --
--- Индексы таблицы `hierarhy`
+-- Индексы таблицы `sections`
 --
-ALTER TABLE `hierarhy`
+ALTER TABLE `sections`
     ADD PRIMARY KEY (`id`),
     ADD KEY `parentId` (`parentId`),
     ADD KEY `linkName` (`linkName`);
@@ -94,9 +94,9 @@ ALTER TABLE `posts`
 --
 
 --
--- AUTO_INCREMENT для таблицы `hierarhy`
+-- AUTO_INCREMENT для таблицы `sections`
 --
-ALTER TABLE `hierarhy`
+ALTER TABLE `sections`
     MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --

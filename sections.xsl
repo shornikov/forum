@@ -18,10 +18,7 @@
                         <ol class="breadcrumb">
                             <xsl:for-each select="breadcrumb/node">
                                 <li class="breadcrumb-item">
-                                    <a>
-                                        <xsl:attribute name="href">
-                                            <xsl:value-of select="link"/>
-                                        </xsl:attribute>
+                                    <a href="{link}">
                                         <xsl:value-of select="name"/>
                                     </a>
                                 </li>
@@ -32,10 +29,7 @@
                     <ul>
                         <xsl:for-each select="subSections/node">
                             <li>
-                                <a>
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of select="linkName"/>
-                                    </xsl:attribute>
+                                <a href="{linkName}">
                                     <xsl:value-of select="name"/>
                                 </a>
                             </li>
@@ -46,10 +40,7 @@
                         <button class="btn btn-primary" type="button" id="addpost">add Topic</button>
                         <div id="addPostDialog" class="jumbotron d-none mt-5">
                             <form action="/addtopic" method="post">
-                                <input type="hidden" name="razdel">
-                                    <xsl:attribute name="value">
-                                        <xsl:value-of select="linkName"/>
-                                    </xsl:attribute>
+                                <input type="hidden" name="razdel" value="{linkName}">
                                 </input>
                                 <div class="form-group col-12">
                                     <label for="title">Title</label>
@@ -77,12 +68,12 @@
                             </table>
                         </div>
                     </div>
+
                 </div>
             </body>
         </html>
     </xsl:template>
 
-    <!--    todo возможно надо сделать внешний темплейт. Пока он сильно похож на темплейт из topic.xsl-->
     <xsl:template match="topics/node">
         <div class="col-12 alert alert-secondary">
             <div class="col-12">
@@ -94,13 +85,10 @@
                 </div>
             </div>
             <div class="col-12">
-                <a>
-                    <xsl:attribute name="href">
-                        <xsl:value-of select="'topic/'"/>
-                        <xsl:value-of select="id"/>
-                    </xsl:attribute>
+                <a href="{concat('topic/',id)}">
                     <xsl:value-of select="title"/>
                 </a>
+                <xsl:value-of select="text"/>
             </div>
         </div>
     </xsl:template>
